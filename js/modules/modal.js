@@ -60,4 +60,4 @@ function modal() {
   document.addEventListener('scroll', openModalByScroll);
 }
 
-module.exports = modal;
+export default modal;
