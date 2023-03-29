@@ -1,3 +1,7 @@
+import modal from "./modal";
+import { openModal } from "./modal";
+import { closeModal } from "./modal";
+
 function forms() {
 
   const forms = document.querySelectorAll('form');
@@ -52,8 +56,8 @@ function forms() {
     const modalDialog = document.querySelector('.modal__dialog');
 
     modalDialog.classList.add('hide');
-    modal.classList.add('show');
-    modal.classList.remove('hide');
+    openModal('.modal');
+    closeModal('.modal');
 
     const thanksModal = document.createElement('div');
     thanksModal.classList.add('modal__dialog');
@@ -68,8 +72,8 @@ function forms() {
         thanksModal.remove();
         modalDialog.classList.remove('hide');
         modalDialog.classList.add('show');
-        modal.classList.add('hide');
-        modal.classList.remove('show');
+        closeModal('.modal');
+        openModal('.modal');
     }, 4000);
   }
 

@@ -4,13 +4,18 @@ import modal from './modules/modal';
 import timer from './modules/timer';
 import forms from './modules/forms';
 import cards from './modules/cards';
+import { openModal } from './modules/modal';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Start');
 
+  const timerOpenModal = setTimeout(() => {
+    openModal('.modal', timerOpenModal);
+  }, 5000);
+
   tabs();
   slider();
-  modal();
+  modal('[data-modal]', '.modal', timerOpenModal);
   timer();
   forms();
   cards();

@@ -1,48 +1,51 @@
-function modal() {
-  const modal = document.querySelector('.modal');
+function openModal(modalSelector, modalTimerId) {
+  const modal = document.querySelector(modalSelector);
+  modal.classList.add('show');
+  modal.classList.remove('hide');
+  document.body.style.overflow = 'hidden';
+  if (modalTimerId) {
+    clearInterval(modalTimerId);
+  }
+}
+
+function closeModal(modalSelector) {
+  const modal = document.querySelector(modalSelector);
+  modal.classList.remove('show');
+  modal.classList.add('hide');
+  document.body.style.overflow = '';
+}
+
+function modal(triggerSelector, modalSelector, modalTimerId) {
+  const modal = document.querySelector(modalSelector);
   const closeModalBtn = document.querySelector('[data-close]');
-  const callActionBtn = document.querySelectorAll('[data-modal]');
+  const callActionBtn = document.querySelectorAll(triggerSelector);
 
   callActionBtn.forEach(element => {
     element.addEventListener('click', (event) => {
       event.preventDefault();
-      clearInterval(timerOpenModal);
-      // modal.style.display = 'block';
-      modal.classList.add('show');
-      modal.classList.remove('hide');
-      document.body.style.overflow = 'hidden';
+      openModal(modalSelector, modalTimerId);
     })
-  })
+  });
 
   closeModalBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    modal.classList.remove('show');
-    modal.classList.add('hide');
+    closeModal(modalSelector);
     document.body.style.overflow = '';
-    // modal.style.display = 'none';
   })
 
   modal.addEventListener('click', (event) => {
     if (event.target === modal || event.target.getAttribute('data-close') == '') {
-      modal.classList.remove('show');
-      modal.classList.add('hide');
-      document.body.style.overflow = '';
+      closeModal(modalSelector);
+      // document.body.style.overflow = '';
     }
   })
 
   document.addEventListener('keydown', (event) => {
     if (event.code ==='Escape') {
-      modal.classList.remove('show');
-      modal.classList.add('hide');
-      document.body.style.overflow = '';
+      closeModal(modalSelector);
+      // document.body.style.overflow = '';
     }
   })
-
-  const timerOpenModal = setTimeout(function () {
-    modal.classList.add('show');
-    modal.classList.remove('hide');
-  }, 50000);
-
 
  // Мое решение по открытию модального окна по таймеру
 
@@ -50,9 +53,7 @@ function modal() {
 
   function openModalByScroll() {
     if (document.documentElement.scrollTop + document.documentElement.clientHeight >= body.scrollHeight) {
-      modal.classList.add('show');
-      modal.classList.remove('hide');
-      clearInterval(timerOpenModal);
+      openModal(modalSelector, modalTimerId);
       document.removeEventListener('scroll', openModalByScroll);
     }
   }
@@ -61,3 +62,5 @@ function modal() {
 }
 
 export default modal;
+export {openModal};
+export {closeModal};
